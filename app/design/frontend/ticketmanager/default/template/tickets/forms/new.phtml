@@ -1,0 +1,43 @@
+<?php
+
+
+?>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="page-title">
+    <h1><?php echo Mage::helper('contacts')->__('New Ticket') ?></h1>
+</div>
+<form action="/tickets/action/newPost" id="contactForm" method="post">
+    <div class="fieldset">
+        <h2 class="legend"><?php echo 'Ticket Information' ?></h2>
+        <ul class="form-list">
+            <li class="fields">
+                <div class="field">
+                    <label for="name" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Subject') ?></label>
+                    <div class="input-box">
+                        <input name="subject" id="subject" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Subject')) ?>"  class="input-text required-entry" type="text" />
+                    </div>
+                </div>
+            </li>
+            <li class="wide">
+                <label for="message" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Message') ?></label>
+                <div class="input-box">
+                    <textarea name="message" id="message" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Message')) ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="buttons-set">
+        <p class="required"><?php echo Mage::helper('contacts')->__('* Required Fields') ?></p>
+        <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+        <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Submit')) ?>" class="button"><span><span><?php echo Mage::helper('contacts')->__('Submit') ?></span></span></button>
+    </div>
+</form>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->getUrl('tickets/action') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var contactForm = new VarienForm('contactForm', true);
+    //]]>
+</script>

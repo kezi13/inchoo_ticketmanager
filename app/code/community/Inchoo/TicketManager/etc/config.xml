@@ -1,0 +1,111 @@
+<config>
+    <modules>
+        <Inchoo_TicketManager>
+            <version>1.0.0.0</version>
+        </Inchoo_TicketManager>
+    </modules>
+
+    <frontend>
+        <routers>
+            <inchoo_ticketmanager>
+                <use>standard</use>
+                <args>
+                    <module>Inchoo_TicketManager</module>
+                    <frontName>tickets</frontName>
+                </args>
+            </inchoo_ticketmanager>
+        </routers>
+
+        <layout>
+            <updates>
+                <inchoo_ticketmanager module="Inchoo_TicketManager">
+                    <file>inchoo_ticketmanager.xml</file>
+                </inchoo_ticketmanager>
+            </updates>
+        </layout>
+
+    </frontend>
+
+    <global>
+        <helpers>
+            <inchoo_ticketmanager>
+                <class>Inchoo_TicketManager_Helper</class>
+            </inchoo_ticketmanager>
+        </helpers>
+
+        <blocks>
+            <inchoo_ticketmanager>
+                <class>Inchoo_TicketManager_Block</class>
+            </inchoo_ticketmanager>
+        </blocks>
+
+        <models>
+            <inchoo_ticketmanager>
+                <class>Inchoo_TicketManager_Model</class>
+                <resourceModel>inchoo_ticketmanager_resource</resourceModel>
+            </inchoo_ticketmanager>
+
+            <inchoo_ticketmanager_resource>
+                <class>Inchoo_TicketManager_Model_Resource</class>
+                <entities>
+                    <ticket>
+                        <table>inchoo_ticketmanager_ticket</table>
+                    </ticket>
+                    <message>
+                        <table>inchoo_ticketmanager_message</table>
+                    </message>
+                </entities>
+            </inchoo_ticketmanager_resource>
+        </models>
+
+        <events>
+            <new_ticket>
+                <observers>
+                    <inchoo_ticketmanager_intercept>
+                        <type>singleton</type>
+                        <class>inchoo_ticketmanager/observer</class>
+                        <method>intercept</method>
+                    </inchoo_ticketmanager_intercept>
+                </observers>
+            </new_ticket>
+        </events>
+
+        <resources>
+            <inchoo_ticketmanager_setup>
+                <setup>
+                    <module>Inchoo_TicketManager</module>
+                </setup>
+            </inchoo_ticketmanager_setup>
+        </resources>
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Inchoo_TicketManager after="Mage_Adminhtml">Inchoo_TicketManager_Adminhtml</Inchoo_TicketManager>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+
+        <layout>
+            <updates>
+                <tickets>
+                    <file>tickets.xml</file>
+                </tickets>
+            </updates>
+        </layout>
+
+<!--        <layout>
+            <updates>
+                <adminhtml module="Inchoo_TicketManager">
+                    <file>tickets.xml</file>
+                </adminhtml>
+            </updates>
+        </layout>-->
+
+    </admin>
+
+</config>

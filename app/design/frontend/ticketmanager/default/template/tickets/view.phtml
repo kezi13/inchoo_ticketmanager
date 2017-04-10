@@ -1,0 +1,86 @@
+<?php
+
+$messages = $this->getMessages();
+$ticket = Mage::registry('ticket');
+
+?>
+<div class="my-account">
+
+<div class="page-title title-buttons">
+    <h1><?php echo $this->__('Ticket '.$ticket->getId()) ?></h1>
+    <h3><?php echo $this->__($this->escapeHtml($ticket->getSubject()).' '.$ticket->getCreatedAt()) ?></h3>
+
+    <?php if($ticket->getStatus()) :?>
+
+        <form action="<?php echo $this->getUrl('tickets/action/closePost') ?>" id="messageForm" method="post">
+            <input type="hidden" name="ticket_id" value="<?php echo $ticket->getId() ?>">
+            <button type="submit"  title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Submit')) ?>" class="button"><span><span><?php echo Mage::helper('contacts')->__('Close Ticket') ?></span></span></button>
+        </form>
+
+    <?php endif ?>
+
+</div>
+
+
+<table class="data-table" id="my-ticket-table" >
+
+    <thead>
+    <tr>
+        <th><?php echo $this->__('Message #') ?></th>
+        <th><?php echo $this->__('Date') ?></th>
+        <th><?php echo $this->__('Author') ?></th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($messages as $message): ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($message->getMessage()) ?>&nbsp;</td>
+            <td><?php echo $message->getCreatedAt() ?>&nbsp;</td>
+            <td><?php echo $message->getIsAdmin() ? 'Admin': $this->escapeHtml($this->getCustomerName()) ?>&nbsp;</td>
+
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+</table>
+<script type="text/javascript">decorateTable('my-ticket-table')</script>
+
+<?php if( $ticket->getStatus()) : ?>
+
+
+    <div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+    <div class="page-title">
+        <h4><?php echo Mage::helper('contacts')->__('Reply') ?></h4>
+    </div>
+    <form action="<?php echo $this->getUrl('tickets/action/replyPost') ?>" id="contactForm" method="post">
+        <input type="hidden" name="ticket_id" value="<?php echo $ticket->getId() ?>">
+        <div class="fieldset">
+            <h2 class="legend"><?php echo 'Reply' ?></h2>
+            <ul class="form-list">
+                <li class="wide">
+                    <label for="message" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Message') ?></label>
+                    <div class="input-box">
+                        <textarea name="message" id="message" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Message')) ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="buttons-set">
+            <p class="required"><?php echo Mage::helper('contacts')->__('* Required Fields') ?></p>
+            <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Submit')) ?>" class="button"><span><span><?php echo Mage::helper('contacts')->__('Submit') ?></span></span></button>
+        </div>
+    </form>
+    <script type="text/javascript">
+        //<![CDATA[
+        var contactForm = new VarienForm('contactForm', true);
+        //]]>
+    </script>
+
+
+<?php endif; ?>
+
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->getUrl('tickets/action') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+</div>
+</div>

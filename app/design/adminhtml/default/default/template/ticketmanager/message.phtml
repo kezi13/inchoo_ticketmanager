@@ -1,0 +1,59 @@
+<?php
+/*var_dump(Mage::registry('ticket'));*/
+
+$ticket = Mage::registry('ticket');
+$customer = Mage::getModel('customer/customer')->load($ticket->getCustomerId());
+$messages =$ticket->getMessages();
+
+/*var_dump($ticket->getMessages());*/
+/*foreach ($ticket->getMessages() as $message)
+    echo $message->getSubject();*/
+?>
+<div class="grid">
+    <div class="hor-scroll">
+        <table cellspacing="0" class="data">
+            <col  width="10" />
+            <col  width="100" />
+            <col  width="100" />
+            <col  width="10" />
+            <thead>
+            <tr class="headings">
+                <th class=" no-link"><span class="nobr">Id</span></th>
+                <th class=" no-link"><span class="nobr">Customer Name</span></th>
+                <th class=" no-link"><span class="nobr">Message</span></th>
+                <th class=" no-link"><span class="nobr">Created At</span></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <?php foreach ($messages as $message ) : ?>
+
+            <tr>
+                <td ><?php echo $message->getId(); ?></td>
+                <td><?php echo $message->getIsAdmin() ? 'Admin' : $this->escapeHtml($customer->getName()); ?></td>
+                <td><?php echo $this->escapeHtml($message->getMessage()); ?></td>
+                <td><?php echo $message->getCreatedAt(); ?></td>
+            </tr>
+            <?php endforeach;?>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+    <?php if ($ticket->getStatus()) : ?>
+        <hr>
+        <h3>Reply</h3>
+        <form method="post" id="reply_form2" action="http://ticket.loc/index.php/admin/tickets/reply">
+            <label for="message" id="message"></label>
+            <input name="form_key" type="hidden" value="7tBjdUYWdb3auliP" />
+            <input type="hidden" name="ticket_id" value="<?php echo $ticket->getId(); ?>">
+            <textarea  cols="50" rows="10" name="message" id="message" required></textarea>
+            <br>
+            <input type="submit" value="Reply">
+
+        </form>
+
+    <br>
+    <?php  endif; ?>

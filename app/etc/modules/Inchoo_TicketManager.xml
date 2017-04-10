@@ -1,0 +1,8 @@
+<config>
+  <modules>
+    <Inchoo_TicketManager>
+      <active>true</active>
+      <codePool>community</codePool>
+    </Inchoo_TicketManager>
+  </modules>
+</config>

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+
+
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="customer"><name>ticket</name><path>inchoo_ticketmanager/action/</path><label>My Tickets</label></action>
+        </reference>
+    </customer_account>
+
+
+    <inchoo_ticketmanager_action_index>
+
+        <update handle="customer_account"/>
+
+        <!-- Tickets home -->
+<!--        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="customer/address_edit" name="tickets_home" template="tickets/home.phtml"/>
+        </reference>-->
+
+
+        <reference name="content">
+            <block type="inchoo_ticketmanager/ticket" name="ticket_all" template="tickets/home.phtml"/>
+        </reference>
+
+
+
+    </inchoo_ticketmanager_action_index>
+
+    <inchoo_ticketmanager_action_new>
+
+        <update handle="customer_account"/>
+
+        <!-- Tickets home -->
+        <!--        <update handle="customer_account"/>
+                <reference name="my.account.wrapper">
+                    <block type="customer/address_edit" name="tickets_home" template="tickets/home.phtml"/>
+                </reference>-->
+
+
+        <reference name="content">
+<!--
+            <block type="inchoo_ticketmanager/ticket" name="ticket_new" template="tickets/forms/new.phtml"/>
+-->
+            <block type="inchoo_ticketmanager/ticket" name="ticket_new" template="tickets/forms/new.phtml"/>
+
+        </reference>
+
+
+
+    </inchoo_ticketmanager_action_new>
+
+    <inchoo_ticketmanager_action_view>
+
+        <update handle="customer_account"/>
+
+        <!-- Tickets home -->
+        <!--        <update handle="customer_account"/>
+                <reference name="my.account.wrapper">
+                    <block type="customer/address_edit" name="tickets_home" template="tickets/home.phtml"/>
+                </reference>-->
+
+
+        <reference name="content">
+            <block type="inchoo_ticketmanager/ticket" name="ticket_view" template="tickets/view.phtml"/>
+        </reference>
+
+
+
+    </inchoo_ticketmanager_action_view>
+
+
+</layout>
