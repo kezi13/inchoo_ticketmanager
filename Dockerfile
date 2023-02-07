@@ -1,35 +1,30 @@
 pipeline {
     agent any
     stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
         stage('Deployment') {
             when {
-                expression {
-                    params.DEPLOY_STAGE == "Yes" || params.DEPLOY_PROD == "Yes"
-                }
+                expression { params.DEPLOY == "Yes" }
             }
             steps {
-                script {
-                    if (params.DEPLOY_STAGE == "Yes") {
-                        echo "Deploying to Stage..."
-                    }
-                    if (params.DEPLOY_PROD == "Yes") {
-                        echo "Deploying to Production..."
-                    }
-                }
+                echo 'Deploying...'
+            }
+        }
+        stage('Clean up') {
+            when {
+                expression { params.CLEANUP == "Yes" }
+            }
+            steps {
+                echo 'Cleaning up...'
             }
         }
     }
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5'))
-        timeout(time: 1, unit: 'HOURS')
-        timestamps()
-        buildDiscarder(logRotator(numToKeepStr: '5'))
-        authorization()
-        buildWrappers()
-        ansicolor(useEscapeCode: true)
-    }
     parameters {
-        choice(name: 'DEPLOY_STAGE', choices: ['Yes', 'No'], description: 'Do you want to deploy to Stage?')
-        choice(name: 'DEPLOY_PROD', choices: ['Yes', 'No'], description: 'Do you want to deploy to Production?')
+        choice(name: 'DEPLOY', choices: ['Yes', 'No'], description: 'Do you want to deploy?')
+        choice(name: 'CLEANUP', choices: ['Yes', 'No'], description: 'Do you want to clean up?')
     }
 }
